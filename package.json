@@ -4,9 +4,9 @@
   "description": "A Weather App",
   "license": "MIT",
   "scripts": {
-  "start": "nx run weather-app:dev",
-  "build:weather-app": "nx build weather-app",
-  "test:weather-app": "nx run weather-app:test"
+    "start": "nx run weather-app:dev",
+    "build:weather-app": "nx build weather-app",
+    "test:weather-app": "nx run weather-app:test"
   },
   "private": true,
   "dependencies": {
@@ -31,10 +31,11 @@
     "@swc/core": "~1.3.85",
     "@swc/helpers": "~0.5.2",
     "@testing-library/react": "^16.0.0",
-    "@types/jest": "^29.4.0",
+    "@types/jest": "^29.5.12",
     "@types/node": "18.16.9",
     "@types/react": "18.2.33",
     "@types/react-dom": "18.2.14",
+    "@types/testing-library__jest-dom": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
     "babel-jest": "^29.4.1",

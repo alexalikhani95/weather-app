@@ -10,7 +10,9 @@ const FiveDayForecast = ({ weatherData }: FiveDayForecastProps) => {
   return (
     <>
       <div style={{ color: 'white', marginTop: '20px', textAlign: 'center' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold' }}>5 Day Forecast</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold' }}>
+          5 Day Forecast
+        </h2>
       </div>
       <div
         style={{
@@ -38,6 +40,7 @@ const FiveDayForecast = ({ weatherData }: FiveDayForecastProps) => {
                 flexDirection: 'column',
                 justifyContent: 'space-between',
               }}
+              data-testid={`weather-card-${index}`}
             >
               <div
                 style={{
@@ -49,8 +52,8 @@ const FiveDayForecast = ({ weatherData }: FiveDayForecastProps) => {
               </div>
               <div>{day.conditions}</div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div>{Math.round(day.tempmax)}°C</div>
-                <div>{Math.round(day.tempmin)}°C</div>
+                <div data-testid={`max-temp-${index}`}>{Math.round(day.tempmax)}°C</div>
+                <div data-testid={`min-temp-${index}`}>{Math.round(day.tempmin)}°C</div>
               </div>
             </div>
           ))}
