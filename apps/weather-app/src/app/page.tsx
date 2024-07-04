@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { WeatherData, WeatherState } from '../../types/Weather'
+import { WeatherData, WeatherState } from '../../types/Weather';
+import WeatherInfoCard from './components/WeatherInfoCard';
 
 export default function Index() {
   const [weatherState, setWeatherState] = useState<WeatherState>({
     weatherData: [],
-    currentWeather: null,
     cityName: '',
   });
 
@@ -17,7 +17,6 @@ export default function Index() {
         const { data } = await axios.get<WeatherData>('/api/weather');
         setWeatherState({
           weatherData: data.days || [],
-          currentWeather: data.currentConditions,
           cityName: data.address,
         });
       } catch (error) {
@@ -34,7 +33,9 @@ export default function Index() {
     return date.toLocaleDateString('en-GB', options);
   };
 
-  const { cityName, currentWeather, weatherData } = weatherState;
+  const { cityName, weatherData } = weatherState;
+
+  const currentDay = weatherData.length > 0 ? weatherData[0] : null;
 
   return (
     <div style={{ display: 'flex', backgroundColor: '#100E1D', height: '100vh', color: 'white' }}>
@@ -43,17 +44,34 @@ export default function Index() {
           {cityName.charAt(0).toUpperCase() + cityName.slice(1)}
         </div>
         <div style={{ marginBottom: '10px' }}>{formatDate(new Date().toISOString())}</div>
-        {currentWeather && (
+        {currentDay && (
           <>
             <div style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '10px' }}>
-              {Math.round(currentWeather.temp)}°C
+              {Math.round(currentDay.temp)}°C
             </div>
-            <div>{currentWeather.conditions}</div>
+            <div>{currentDay.conditions}</div>
           </>
         )}
       </div>
 
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ color: 'white', marginBottom: '20px', textAlign: 'center' }}>
+          <h2 style={{ fontSize: '20px', fontWeight: 'bold' }}>Day Overview</h2>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
+          {currentDay && (
+            <>
+              <WeatherInfoCard title="Max Temp" value={`${Math.round(currentDay.tempmax)}°C`} />
+
+              <WeatherInfoCard title="Min Temp" value={`${Math.round(currentDay.tempmin)}°C`} />
+
+              <WeatherInfoCard title="Sunrise" value={currentDay.sunrise.split(':').slice(0, 2).join(':')} />
+
+              <WeatherInfoCard title="Sunset" value={currentDay.sunset.split(':').slice(0, 2).join(':')} />
+            </>
+          )}
+        </div>
+
         <div style={{ color: 'white', marginBottom: '20px', textAlign: 'center' }}>
           <h2 style={{ fontSize: '20px', fontWeight: 'bold' }}>5 Day Forecast</h2>
         </div>
