@@ -1,4 +1,4 @@
-type WeatherDay = {
+export type WeatherDay = {
   datetime: string;
   temp: number;
   tempmax: number;
