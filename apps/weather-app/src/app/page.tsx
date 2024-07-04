@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { WeatherData, WeatherState } from '../../types/Weather'
 
 export default function Index() {
-  const [weatherState, setWeatherState] = useState<any>({
+  const [weatherState, setWeatherState] = useState<WeatherState>({
     weatherData: [],
     currentWeather: null,
     cityName: '',
@@ -14,7 +14,7 @@ export default function Index() {
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
-        const { data } = await axios.get<any>('/api/weather');
+        const { data } = await axios.get<WeatherData>('/api/weather');
         setWeatherState({
           weatherData: data.days || [],
           currentWeather: data.currentConditions,
@@ -26,7 +26,7 @@ export default function Index() {
     };
 
     fetchWeatherData();
-  }, []);
+  }, []); 
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -58,7 +58,7 @@ export default function Index() {
           <h2 style={{ fontSize: '20px', fontWeight: 'bold' }}>5 Day Forecast</h2>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
-          {weatherData.length > 0 && weatherData.slice(0, 5).map((day: any, index: number) => (
+          {weatherData.length > 0 && weatherData.slice(0, 5).map((day, index) => (
             <div key={index} style={{ backgroundColor: '#1F1C36', color: 'white', padding: '20px', margin: '10px', textAlign: 'center', width: '200px', borderRadius: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <div style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '10px' }}>
                 {index === 0 ? 'Tomorrow' : formatDate(day.datetime)}
