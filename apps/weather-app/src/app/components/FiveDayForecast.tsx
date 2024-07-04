@@ -19,7 +19,6 @@ const FiveDayForecast = ({ weatherData }: FiveDayForecastProps) => {
           alignItems: 'center',
           flexWrap: 'wrap',
           width: '100%',
-          maxWidth: '800px',
         }}
       >
         {weatherData.length > 0 &&
@@ -32,26 +31,26 @@ const FiveDayForecast = ({ weatherData }: FiveDayForecastProps) => {
                 padding: '20px',
                 margin: '10px',
                 textAlign: 'center',
-                width: '200px',
+                width: '150px',
+                height: '300px',
                 borderRadius: '10px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center',
+                justifyContent: 'space-between',
               }}
             >
               <div
                 style={{
                   fontSize: '18px',
                   fontWeight: 'bold',
-                  marginBottom: '10px',
                 }}
               >
                 {index === 0 ? 'Tomorrow' : formatDate(day.datetime)}
               </div>
-              <div style={{ marginBottom: '10px' }}>{day.conditions}</div>
+              <div>{day.conditions}</div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div>High: {Math.round(day.tempmax)}°C</div>
-                <div>Low: {Math.round(day.tempmin)}°C</div>
+                <div>{Math.round(day.tempmax)}°C</div>
+                <div>{Math.round(day.tempmin)}°C</div>
               </div>
             </div>
           ))}
