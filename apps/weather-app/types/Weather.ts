@@ -6,6 +6,8 @@ type WeatherDay = {
   conditions: string;
   sunrise: string;
   sunset: string;
+  humidity: number;
+  cloudcover: number;
 };
 
 export type WeatherData = {
