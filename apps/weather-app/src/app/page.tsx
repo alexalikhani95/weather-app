@@ -11,24 +11,28 @@ import FiveDayForecast from './components/FiveDayForecast';
 export default function Index() {
   const [weatherState, setWeatherState] = useState<WeatherState>({
     weatherData: [],
-    cityName: '',
+    cityName: 'brighton',
   });
 
-  useEffect(() => {
-    const fetchWeatherData = async () => {
-      try {
-        const { data } = await axios.get<WeatherData>('/api/weather');
-        setWeatherState({
-          weatherData: data.days || [],
-          cityName: data.address,
-        });
-      } catch (error) {
-        console.error('Error fetching weather data:', error);
-      }
-    };
+  const fetchWeatherData = async (city: string) => {
+    try {
+      const { data } = await axios.get<WeatherData>(`/api/weather?city=${city}`);
+      setWeatherState({
+        weatherData: data.days || [],
+        cityName: data.address,
+      });
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+    }
+  };
 
-    fetchWeatherData();
-  }, []);
+  useEffect(() => {
+    fetchWeatherData(weatherState.cityName);
+  }, [weatherState.cityName]);
+
+  const handleCityChange = (newCity: string) => {
+    fetchWeatherData(newCity);
+  };
 
   const { cityName, weatherData } = weatherState;
 
@@ -41,7 +45,7 @@ export default function Index() {
 
   return (
     <div style={{ display: 'flex', backgroundColor: '#100E1D', height: '100%', color: 'white' }}>
-      {currentDay && <Sidebar  cityName={cityName} currentDay={currentDay} />}
+      {currentDay && <Sidebar cityName={cityName} currentDay={currentDay} onCityChange={handleCityChange} />}
 
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
         <div style={{ color: 'white', marginBottom: '20px', textAlign: 'center' }}>
@@ -99,7 +103,7 @@ export default function Index() {
           )}
         </div>
 
-          <FiveDayForecast weatherData={weatherData} />
+        <FiveDayForecast weatherData={weatherData} />
       </div>
     </div>
   );
