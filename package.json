@@ -4,8 +4,9 @@
   "description": "A Weather App",
   "license": "MIT",
   "scripts": {
-    "start": "nx run weather-app:dev",
-    "build:weather-app": "nx build weather-app"
+  "start": "nx run weather-app:dev",
+  "build:weather-app": "nx build weather-app",
+  "test:weather-app": "nx run weather-app:test"
   },
   "private": true,
   "dependencies": {
